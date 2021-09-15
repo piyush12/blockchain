@@ -101,7 +101,7 @@ function useFetch(
       }
       const data = await response.json();
 
-      // if (cancelRequest.current) return;
+      if (cancelRequest.current) return;
       dispatch({ type: "resolved", data: mockData.result });
     } catch (error) {
       if (cancelRequest.current) return;
