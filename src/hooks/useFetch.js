@@ -85,6 +85,8 @@ function useFetch(
   });
   const { status, data, error } = state;
   const cancelRequest = useRef(false);
+
+  //  update url when the url params change
   const [pageUrl, setPageUrl] = useState(url)
 
 

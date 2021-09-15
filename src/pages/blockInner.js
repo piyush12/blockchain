@@ -663,12 +663,16 @@ const transactionObj = {
 
 function BlockInner() {
   const routeParams = useParams();
+
+  // fetching data from server
   const {
     status,
     data: result,
     error,
     run,
   } = useFetch("https://jsonplaceholder.typicode.com/todos/1");
+
+
   const { search } = useLocation();
   const pageId = new URLSearchParams(search).get("page");
   const history = useHistory();
@@ -676,6 +680,8 @@ function BlockInner() {
 
   const { data, itemsCount } = mockData.result;
   const itemsPerPage = result ? result.length : 0;
+
+  // on pagination click
 
   const handlePaginationClick = (pageNum) => {
     setCurrentPage(pageNum);

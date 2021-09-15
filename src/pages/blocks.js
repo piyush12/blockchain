@@ -4,7 +4,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import AppPagination from "../Components/AppPagination";
 import AppTable, { Head, Body, Row } from "../Components/AppTable/Table";
 import Loading from "../Components/Loading";
-import PageTitle from '../Components/PageTitle';
+import PageTitle from "../Components/PageTitle";
 import useFetch from "../hooks/useFetch";
 
 const headObj = {
@@ -15,14 +15,14 @@ const headObj = {
 };
 
 export function Blocks() {
+  // fetching data from server
   const { status, data, error, run } = useFetch(
     "https://jsonplaceholder.typicode.com/todos/1"
   );
-  const {search} = useLocation();
+  const { search } = useLocation();
   const history = useHistory();
-  const pageId = new URLSearchParams(search).get("page");
-  const [currentPage, setCurrentPage] = useState(() => pageId ? pageId : 1);
-
+  const pageId = new URLSearchParams(search).get("page"); /// url searchparms to get search value
+  const [currentPage, setCurrentPage] = useState(() => (pageId ? pageId : 1));
 
   if (status === "error") {
     return (
@@ -31,34 +31,35 @@ export function Blocks() {
       </Alert>
     );
   }
-    const { data: result, itemsCount } = data || {};
-    const itemsPerPage = result ? result.length : 0;
+  const { data: result, itemsCount } = data || {};
+  const itemsPerPage = result ? result.length : 0;
 
-    const handlePaginationClick = (pageNum) => {
-      setCurrentPage(pageNum);
-      history.push({
-        pathname:"/",
-        search:`?page=${pageNum}`
-      })
-      run(`https://jsonplaceholder.typicode.com/todos/1'${pageNum}`)
-    };
+  const handlePaginationClick = (pageNum) => {
+    setCurrentPage(pageNum);
+    history.push({
+      pathname: "/",
+      search: `?page=${pageNum}`,
+    });
+    run(`https://jsonplaceholder.typicode.com/todos/1'${pageNum}`); /// call api for page change
+  };
 
-    return (
-      <>
+  return (
+    <>
       <PageTitle title='Blocks' />
-      <Loading show={status==="pending"} />
-        <AppTable>
-          {() => (
-            <>
-              <Head>
-                <Row>
-                  {Object.keys(headObj).map((item) => (
-                    <th key={item}>{headObj[item]}</th>
-                  ))}
-                </Row>
-              </Head>
-              <Body>
-                {result && result.map((item, index) => {
+      <Loading show={status === "pending"} />
+      <AppTable>
+        {() => (
+          <>
+            <Head>
+              <Row>
+                {Object.keys(headObj).map((item) => (
+                  <th key={item}>{headObj[item]}</th>
+                ))}
+              </Row>
+            </Head>
+            <Body>
+              {result &&
+                result.map((item, index) => {
                   return (
                     <Row key={`${item.height}-${index}`}>
                       {Object.keys(headObj).map((key, index) => {
@@ -80,16 +81,16 @@ export function Blocks() {
                     </Row>
                   );
                 })}
-              </Body>
-            </>
-          )}
-        </AppTable>
-        <AppPagination
-          itemsPerPage={itemsPerPage}
-          totalItems={itemsCount}
-          handlePaginationClick={handlePaginationClick}
-          currentPage={parseInt(currentPage)}
-        />
-      </>
-    );
+            </Body>
+          </>
+        )}
+      </AppTable>
+      <AppPagination
+        itemsPerPage={itemsPerPage}
+        totalItems={itemsCount}
+        handlePaginationClick={handlePaginationClick}
+        currentPage={parseInt(currentPage)}
+      />
+    </>
+  );
 }
