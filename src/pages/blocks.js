@@ -4,6 +4,7 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import AppPagination from "../Components/AppPagination";
 import AppTable, { Head, Body, Row } from "../Components/AppTable/Table";
 import Loading from "../Components/Loading";
+import PageTitle from '../Components/PageTitle';
 import useFetch from "../hooks/useFetch";
 
 const headObj = {

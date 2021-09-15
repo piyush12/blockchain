@@ -1,10 +1,12 @@
 .App {
   font-family: sans-serif;
+  margin-top: 20px;
 }
 
-h1 {
+.title h1 {
   color: rgb(53, 63, 82);
-  font-size: 22px;
+  font-weight: 900;
+  font-size: 26px;
 }
 
 th {
@@ -22,4 +24,8 @@ td {
   position: absolute;
   left: 50%;
   top: 30%;
+}
+.title{
+  margin: 20px 0 ;
+
 }
